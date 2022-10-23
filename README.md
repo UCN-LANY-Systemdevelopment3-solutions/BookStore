@@ -39,9 +39,6 @@ To be able to sell books the administrator of the web shop must be able to creat
 * Make a store that contains at least three different books with the following attributes: ISBN (string), title(text), author (text), price (positive number), number on stock (zero, or positive)
 * Add a book with invalid values (ISBN/Title/etc.) and make sure the collection throws an ArgumentException
 
-#### Note
-Remember to encapsulate your data. Don’t make an inner List<Book> public. Instead create methods on the BookContainer for Adding, Removing and searching the inner collection as necessary.  
-
 ---
  
 ## Story 2  

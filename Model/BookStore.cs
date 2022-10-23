@@ -8,5 +8,11 @@ namespace BookShop.Model
 {
     public class BookStore
     {
+        public IEnumerable<Book> Titles { get; set; }
+
+        public void Add(Book book1)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
