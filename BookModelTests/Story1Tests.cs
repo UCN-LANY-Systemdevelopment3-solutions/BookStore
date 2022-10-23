@@ -29,5 +29,53 @@ namespace BookModelTests
             // Assert
             Assert.Equal(3, store.Titles.Count());
         }
+
+        [Fact]
+        public void AddBookWithInvalidISBNToStore()
+        {
+            // Arrange
+            BookStore store = new();
+            Book book2 = new(string.Empty, "Serious Cryptography", "Jean-Philippe Aumasson", 349.00, 8);
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>("isbn", () => { store.Add(book2); });
+        }
+
+        [Fact]
+        public void AddBookWithInvalidTitleToStore()
+        {
+            // Arrange
+            BookStore store = new();
+            Book book2 = new("978-1-59327-826-7", string.Empty, "Jean-Philippe Aumasson", 349.00, 8);
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>("title", () => { store.Add(book2); });
+        }
+
+        [Fact]
+        public void AddBookWithInvalidAuthorToStore()
+        {
+            // Arrange
+            BookStore store = new();
+            Book book2 = new("978-1-59327-826-7", "Serious Cryptography", string.Empty, 349.00, 8);
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>("title", () => { store.Add(book2); });
+        }
+
+        [Fact]
+        public void AddBookWithNegativePriceToStore()
+        {
+            // Arrange
+            BookStore store = new();
+            Book book2 = new("978-1-59327-826-7", "Serious Cryptography", "Jean-Philippe Aumasson", -349.00, 8);
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>("title", () => { store.Add(book2); });
+        }
     }
 }
