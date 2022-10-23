@@ -32,18 +32,15 @@ To be able to sell books the administrator of the web shop must be able to creat
 > As an administrator, I want to be able to add new books to the collection, So there’s stock for customers to purchase from.
 
 ### Success criteria: 
-* That a book is added to a collection of books.
+* That a book is added to the store.
 * That a book only is added if it is in a valid state (i.e., non-negative price, title/author/ISBN is a string longer than one character, etc.)
 
 ### Suggested tests
-* Make a bookcontainer that contains at least three different books with the following attributes: ISBN (string), title(text), author (text), price (positive number), number on stock (zero, or positive)
-* Add a book to the bookcontainer and retrieve it again using the ISBN number.
+* Make a store that contains at least three different books with the following attributes: ISBN (string), title(text), author (text), price (positive number), number on stock (zero, or positive)
 * Add a book with invalid values (ISBN/Title/etc.) and make sure the collection throws an ArgumentException
 
 #### Note
 Remember to encapsulate your data. Don’t make an inner List<Book> public. Instead create methods on the BookContainer for Adding, Removing and searching the inner collection as necessary.  
-
-Use the test first coding technique to ensure simple design according to the acceptance tests
 
 ---
  
