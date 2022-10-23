@@ -22,5 +22,7 @@ namespace BookShop.Model
         public string V3 { get; }
         public double V4 { get; }
         public int V5 { get; }
+        public bool IsDeleted { get; set; }
+        public string ISBN { get; set; }
     }
 }

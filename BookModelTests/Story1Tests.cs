@@ -1,5 +1,3 @@
-
-
 using BookShop.Model;
 
 namespace BookModelTests
