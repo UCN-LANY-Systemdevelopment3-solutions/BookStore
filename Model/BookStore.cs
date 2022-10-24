@@ -24,5 +24,10 @@ namespace BookShop.Model
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Book> Search(string searchString)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
