@@ -21,7 +21,7 @@ Do the exercises in pairs to practice Pair Programming, and change roles (coder/
 Write good, [clean code](https://dzone.com/articles/clean-code-summary-and-key-points). Write code that expresses your intent through naming and structure. 
 Essentially: give meaningful names to classes, methods, variables and arguments, so people understand what’s going on. Use the phase where you’re writing the test, to plan how you would like to be able to use the actual code that you will write later. 
 
-Implement the following stories using the test first coding technique to ensure simple design according to the acceptance tests.
+Implement the following stories using the test first coding technique to ensure simple design according to the acceptance tests. The model classes must be added to the Model project.
 
 ---
  
@@ -29,15 +29,15 @@ Implement the following stories using the test first coding technique to ensure 
 To be able to sell books the administrator of the web shop must be able to create and select books from the system.
 
 ### User Story  
-> As an administrator, I want to be able to add new books to the collection, So there’s stock for customers to purchase from.
+> As an administrator, I want to be able to add new books to the store, So there’s stock for customers to purchase from.
 
 ### Success criteria: 
 * That a book is added to the store.
 * That a book only is added if it is in a valid state (i.e., non-negative price, title/author/ISBN is a string longer than one character, etc.)
 
 ### Suggested tests
-* Make a store that contains at least three different books with the following attributes: ISBN (string), title(text), author (text), price (positive number), number on stock (zero, or positive)
-* Add a book with invalid values (ISBN/Title/etc.) and make sure the collection throws an ArgumentException
+* Make a bookstore that contains at least three different books with the following attributes: ISBN (string), title(text), author (text), price (positive number), number on stock (zero, or positive)
+* Add a book with invalid values (ISBN/Title/etc.) and make sure the store throws an ArgumentException
 
 ---
  
