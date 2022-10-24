@@ -25,7 +25,7 @@ namespace BookShop.Model
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Book> Search(string searchString)
+        public IEnumerable<Book> Search(string? title = null, string? authorName = null)
         {
             throw new NotImplementedException();
         }

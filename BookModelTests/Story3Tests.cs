@@ -21,10 +21,10 @@ namespace BookModelTests
         {
             // Arrange
             BookStore store = _bookStoreFixture.Store;
-            string searchString = "";
+            string searchString = "Serious";
 
             // Act
-            IEnumerable<Book> result = store.Search(searchString);
+            IEnumerable<Book> result = store.Search(title: searchString);
 
             // Assert
             Assert.NotNull(result);
@@ -36,24 +36,50 @@ namespace BookModelTests
         public void TestSearchForBookByPartlyAuthorName()
         {
             // Arrange
+            BookStore store = _bookStoreFixture.Store;
+            string searchString = "Sarcar";
+
             // Act
+            IEnumerable<Book> result = store.Search(authorName: searchString);
+
             // Assert
+            Assert.NotNull(result);
+            Assert.True(result.Any());
+            Assert.Contains<Book>(result, b => b.Title.Contains(searchString));
+
         }
 
         [Fact]
         public void TestSearchForBookByPartlyTitleAndPartlyAuthorName()
         {
             // Arrange
+            BookStore store = _bookStoreFixture.Store;
+            string searchString1 = "Design";
+            string searchString2 = "Sarcar";
+
             // Act
+            IEnumerable<Book> result = store.Search(title: searchString1, authorName: searchString2);
+
             // Assert
+            Assert.NotNull(result);
+            Assert.True(result.Any());
+            Assert.Contains<Book>(result, b => b.Title.Contains(searchString1));
         }
 
         [Fact]
         public void TestSearchForBookByWordsThatAreNotPartOfEitherTitleOrName()
         {
             // Arrange
+            BookStore store = _bookStoreFixture.Store;
+            string searchString1 = "Tqlmzftt";
+            string searchString2 = "Afkansh";
+
             // Act
+            IEnumerable<Book> result = store.Search(title: searchString1, authorName: searchString2);
+
             // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
         }
     }
 }
