@@ -21,7 +21,7 @@ Do the exercises in pairs to practice Pair Programming, and change roles (coder/
 Write good, [clean code](https://dzone.com/articles/clean-code-summary-and-key-points). Write code that expresses your intent through naming and structure. 
 Essentially: give meaningful names to classes, methods, variables and arguments, so people understand what’s going on. Use the phase where you’re writing the test, to plan how you would like to be able to use the actual code that you will write later. 
 
-Implement the following stories using the test first coding technique to ensure simple design according to the acceptance tests.
+Implement the following stories using the test first coding technique to ensure simple design according to the acceptance tests. The model classes must be added to the Model project.
 
 ---
  
