@@ -21,23 +21,23 @@ namespace BookModelTests
         public void TestSoftDeleteBook()
         {
             // Arrange
-            BookStore store = _bookStoreFixture.Store;
+            BookStore store = _bookStoreFixture.StoreWithThreeBooks;
             Book book = _bookStoreFixture.Book1;
             string isbn = book.ISBN;
 
             // Act
-            store.Delete(isbn);
+            store.Delete(isbn: isbn);
 
             // Assert
             Assert.Contains(book, store.Titles);
-            Assert.True(store.FindByIsbn(isbn).IsDeleted);
+            Assert.True(book.IsDeleted);
         }
 
         [Fact]
         public void TestDeleteNonExistingBook()
         {
             // Arrange
-            BookStore store = _bookStoreFixture.Store;
+            BookStore store = _bookStoreFixture.EmptyStore;
             string isbn = "this is a non-existing isbn";
 
             // Act
@@ -51,7 +51,7 @@ namespace BookModelTests
         public void TestDeleteAlreadyDeletedBook()
         {
             // Arrange
-            BookStore store = _bookStoreFixture.Store;
+            BookStore store = _bookStoreFixture.StoreWithThreeBooks;
             Book book = _bookStoreFixture.Book1;
             string isbn = book.ISBN;
 
@@ -60,7 +60,7 @@ namespace BookModelTests
             store.Delete(isbn);
 
             // Assert
-            Assert.True(store.FindByIsbn(isbn).IsDeleted);
+            Assert.True(book.IsDeleted);
         }
     }
 }

@@ -6,18 +6,34 @@ using System.Threading.Tasks;
 
 namespace BookShop.Model
 {
-    public class BookStore 
+    public class BookStore
     {
-        public IEnumerable<Book> Titles { get; set; }
+        private IList<Book> _titles = new List<Book>();
 
-        public void Add(Book book1)
+        public IEnumerable<Book> Titles => _titles;
+
+        public void Add(Book book)
         {
-            throw new NotImplementedException();
+            if (book.ISBN == string.Empty)
+                throw new ArgumentException("Invalid value", nameof(book.ISBN));
+
+            if (book.Title == string.Empty)
+                throw new ArgumentException("Invalid value", nameof(book.Title));
+
+            if (book.Author == string.Empty)
+                throw new ArgumentException("Invalid value", nameof(book.Author));
+
+            if (book.Price < 0)
+                throw new ArgumentException("Invalid value", nameof(book.Price));
+
+            _titles.Add(book);
         }
 
-        public void Delete(string v)
+        public void Delete(string isbn)
         {
-            throw new NotImplementedException();
+            Book? book = _titles.SingleOrDefault(b => b.ISBN == isbn);
+            if (book != null)
+                book.IsDeleted = true;
         }
 
         public Book FindByIsbn(string v)
@@ -27,7 +43,15 @@ namespace BookShop.Model
 
         public IEnumerable<Book> Search(string? title = null, string? authorName = null)
         {
-            throw new NotImplementedException();
+            List<Book> result = new();
+
+            if (title != null)
+                result.AddRange(_titles.Where(b => b.Title.Contains(title)));
+
+            if (authorName != null)
+                result.AddRange(_titles.Where(b => b.Author.Contains(authorName)));
+
+            return result;
         }
     }
 }

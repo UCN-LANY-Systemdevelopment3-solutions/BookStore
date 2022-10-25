@@ -10,7 +10,7 @@ namespace BookShop.Model
     {
         public Book Book { get; }
         public int Quantity { get; set; }
-        public int Subtotal { get; }
+        public decimal Subtotal => Book.Price * Quantity;
 
         public Orderline(Book book, int quantity)
         {

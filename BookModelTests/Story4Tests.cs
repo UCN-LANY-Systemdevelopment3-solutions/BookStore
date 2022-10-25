@@ -8,22 +8,20 @@ using System.Threading.Tasks;
 
 namespace BookModelTests
 {
-    public class Story4Tests : IClassFixture<BookStoreFixture>, IClassFixture<ShoppingCartFixture>
+    public class Story4Tests : IClassFixture<BookStoreFixture>
     {
         private readonly BookStoreFixture _bookStoreFixture;
-        private readonly ShoppingCartFixture _shoppingCartFixture;
 
-        public Story4Tests(BookStoreFixture bookStoreFixture, ShoppingCartFixture shoppingCartFixture)
+        public Story4Tests(BookStoreFixture bookStoreFixture)
         {
             _bookStoreFixture = bookStoreFixture;
-            _shoppingCartFixture = shoppingCartFixture;
         }
 
         [Fact]
         public void TestPutBookIntoCart()
         {
             // Arrange
-            ShoppingCart cart = _shoppingCartFixture.EmptyCart;
+            ShoppingCart cart = new();
             Book book1 = _bookStoreFixture.Book1;
             decimal expectedTotal = 299.00M;
 
@@ -41,7 +39,7 @@ namespace BookModelTests
         public void TestCalculateTotalsWhenAddingBookToCart()
         {
             // Arrange
-            ShoppingCart cart = _shoppingCartFixture.EmptyCart;
+            ShoppingCart cart = new();
             Book book1 = _bookStoreFixture.Book1;
             Book book2 = _bookStoreFixture.Book2;
             Book book3 = _bookStoreFixture.Book3;

@@ -19,10 +19,10 @@ namespace BookModelTests
         }
 
         [Fact]
-        public void AddValidBooksToStore()
+        public void TestAddValidBooksToStore()
         {
             // Arrange
-            BookStore store = _bookStoreFixture.Store;
+            BookStore store = _bookStoreFixture.EmptyStore;
             Book book1 = _bookStoreFixture.Book1;
             Book book2 = _bookStoreFixture.Book2;
             Book book3 = _bookStoreFixture.Book3;
@@ -36,52 +36,20 @@ namespace BookModelTests
             Assert.Equal(3, store.Titles.Count());
         }
 
-        [Fact]
-        public void AddBookWithInvalidISBNToStore()
+        [Theory]
+        [InlineData("ISBN", "", "Serious Cryptography", "Jean-Philippe Aumasson", 349.00)]
+        [InlineData("Title", "978-1-59327-826-7", "", "Jean-Philippe Aumasson", 349.00)]
+        [InlineData("Author", "978-1-59327-826-7", "Serious Cryptography", "", 349.00)]
+        [InlineData("Price", "978-1-59327-826-7", "Serious Cryptography", "Jean-Philippe Aumasson", -349.00)]
+        public void TestAddBookWithInvalidArgumentToStore(string argument, string isbn, string title, string author, decimal price)
         {
             // Arrange
             BookStore store = new();
-            Book book2 = new(string.Empty, "Serious Cryptography", "Jean-Philippe Aumasson", 349.00, 8);
+            Book book2 = new(isbn, title, author, price, 8);
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>("isbn", () => { store.Add(book2); });
-        }
-
-        [Fact]
-        public void AddBookWithInvalidTitleToStore()
-        {
-            // Arrange
-            BookStore store = new();
-            Book book2 = new("978-1-59327-826-7", string.Empty, "Jean-Philippe Aumasson", 349.00, 8);
-
-            // Act
-            // Assert
-            Assert.Throws<ArgumentException>("title", () => { store.Add(book2); });
-        }
-
-        [Fact]
-        public void AddBookWithInvalidAuthorToStore()
-        {
-            // Arrange
-            BookStore store = new();
-            Book book2 = new("978-1-59327-826-7", "Serious Cryptography", string.Empty, 349.00, 8);
-
-            // Act
-            // Assert
-            Assert.Throws<ArgumentException>("title", () => { store.Add(book2); });
-        }
-
-        [Fact]
-        public void AddBookWithNegativePriceToStore()
-        {
-            // Arrange
-            BookStore store = new();
-            Book book2 = new("978-1-59327-826-7", "Serious Cryptography", "Jean-Philippe Aumasson", -349.00, 8);
-
-            // Act
-            // Assert
-            Assert.Throws<ArgumentException>("title", () => { store.Add(book2); });
+            Assert.Throws<ArgumentException>(argument, () => { store.Add(book2); });
         }
     }
 }

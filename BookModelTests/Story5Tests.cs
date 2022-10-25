@@ -10,27 +10,26 @@ using Xunit;
 
 namespace BookModelTests
 {
-    public class Story5Tests : IClassFixture<ShoppingCartFixture>
+    public class Story5Tests : IClassFixture<BookStoreFixture>
     {
-        private readonly ShoppingCartFixture _shoppingCartFixture;
+        private readonly BookStoreFixture _bookStoreFixture;
 
-        public Story5Tests(ShoppingCartFixture shoppingCartFixture)
+        public Story5Tests(BookStoreFixture bookStoreFixture)
         {
-            _shoppingCartFixture = shoppingCartFixture;
+            _bookStoreFixture = bookStoreFixture;
         }
 
         [Fact]
         public void TestAddBookAndVerifySubtotalAndTotal()
         {
             // Arrange
-            ShoppingCart cart = _shoppingCartFixture.EmptyCart;
-            Book book1 = _shoppingCartFixture.Book;
+            ShoppingCart cart = new();
+            Book book1 = _bookStoreFixture.Book1;
             decimal expectedSubTotal = 598.00M;
             decimal expectedTotal = 598.00M;
 
             // Act
-            cart.Add(book1);
-            cart.Add(book1);
+            cart.Add(book1, 2);            
 
             // Assert
             Assert.Equal(expectedSubTotal, cart.Orderlines.First().Subtotal);
@@ -41,13 +40,14 @@ namespace BookModelTests
         public void TestIncreasingBookInCart()
         {
             // Arrange
-            ShoppingCart cart = _shoppingCartFixture.CartWithThreeBooks;
-            Book book1 = _shoppingCartFixture.Book;
-            decimal expectedSubTotal = 1196.00M;
-            decimal expectedTotal = 1196.00M;
+            ShoppingCart cart = new();
+            cart.Add(_bookStoreFixture.Book1);
+            Book book2 = _bookStoreFixture.Book2;
+            decimal expectedSubTotal = 299.00M;
+            decimal expectedTotal = 648.00M;
 
             // Act
-            cart.Add(book1);
+            cart.Add(book2);
 
             // Assert
             Assert.Equal(expectedSubTotal, cart.Orderlines.First().Subtotal);
@@ -58,10 +58,11 @@ namespace BookModelTests
         public void TestDecreaseBookInCart()
         {
             // Arrange
-            ShoppingCart cart = _shoppingCartFixture.CartWithThreeBooks;
-            Book book1 = _shoppingCartFixture.Book;
-            decimal expectedSubTotal = 598.00M;
-            decimal expectedTotal = 598.00M;
+            ShoppingCart cart = new();
+            cart.Add(_bookStoreFixture.Book1, 2);
+            Book book1 = _bookStoreFixture.Book1;
+            decimal expectedSubTotal = 299.00M;
+            decimal expectedTotal = 299.00M;
 
             // Act
             cart.Remove(book1);
@@ -75,8 +76,9 @@ namespace BookModelTests
         public void TestRemoveBookFromCart()
         {
             // Arrange
-            ShoppingCart cart = _shoppingCartFixture.CartWithThreeBooks;
-            Book book1 = _shoppingCartFixture.Book;
+            ShoppingCart cart = new();
+            cart.Add(_bookStoreFixture.Book1, 2);
+            Book book1 = _bookStoreFixture.Book1;
             decimal expectedTotal = 0.00M;
 
             // Act

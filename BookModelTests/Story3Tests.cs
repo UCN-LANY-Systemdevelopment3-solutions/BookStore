@@ -17,70 +17,21 @@ namespace BookModelTests
             _bookStoreFixture = bookStoreFixture;
         }
 
-        [Fact]
-        public void TestSearchForBookByPartlyTitle()
+        [Theory]
+        [InlineData("Serious", null, 1)]
+        [InlineData(null, "Sarcar", 1)]
+        [InlineData("Serious", "Sarcar", 2)]
+        [InlineData("Tqlmzftt", "Afkansh", 0)]
+        public void TestSearchForBookByTitleAndOrAuthor(string? searchString1, string? searchString2, int resultCount)
         {
             // Arrange
-            BookStore store = _bookStoreFixture.Store;
-            string searchString = "Serious";
-
-            // Act
-            IEnumerable<Book> result = store.Search(title: searchString);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.True(result.Any());
-            Assert.Contains<Book>(result, b => b.Title.Contains(searchString));
-        }
-
-        [Fact]
-        public void TestSearchForBookByPartlyAuthorName()
-        {
-            // Arrange
-            BookStore store = _bookStoreFixture.Store;
-            string searchString = "Sarcar";
-
-            // Act
-            IEnumerable<Book> result = store.Search(authorName: searchString);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.True(result.Any());
-            Assert.Contains<Book>(result, b => b.Title.Contains(searchString));
-
-        }
-
-        [Fact]
-        public void TestSearchForBookByPartlyTitleAndPartlyAuthorName()
-        {
-            // Arrange
-            BookStore store = _bookStoreFixture.Store;
-            string searchString1 = "Design";
-            string searchString2 = "Sarcar";
+            BookStore store = _bookStoreFixture.StoreWithThreeBooks;
 
             // Act
             IEnumerable<Book> result = store.Search(title: searchString1, authorName: searchString2);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.True(result.Any());
-            Assert.Contains<Book>(result, b => b.Title.Contains(searchString1));
-        }
-
-        [Fact]
-        public void TestSearchForBookByWordsThatAreNotPartOfEitherTitleOrName()
-        {
-            // Arrange
-            BookStore store = _bookStoreFixture.Store;
-            string searchString1 = "Tqlmzftt";
-            string searchString2 = "Afkansh";
-
-            // Act
-            IEnumerable<Book> result = store.Search(title: searchString1, authorName: searchString2);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Empty(result);
+            Assert.Equal(resultCount, result.Count());
         }
     }
 }

@@ -8,17 +8,28 @@ namespace BookShop.Model
 {
     public class ShoppingCart
     {
-        public IEnumerable<Orderline> Orderlines { get; set; }
-        public decimal Total { get; set; }
+        private IList<Orderline> _orderlines = new List<Orderline>();
 
-        public void Add(Book book1, int quantity = 1)
+        public IEnumerable<Orderline> Orderlines => _orderlines;
+
+        public decimal Total => _orderlines.Sum(ol => ol.Subtotal);
+
+        public void Add(Book book, int quantity = 1)
         {
-            throw new NotImplementedException();
+            _orderlines.Add(new Orderline(book, quantity));
         }
 
-        public void Remove(Book book1, bool removeAll = false)
+        public void Remove(Book book, bool removeAll = false)
         {
-            throw new NotImplementedException();
+            Orderline orderline = _orderlines.Single(ol => ol.Book.Equals(book));
+            if (removeAll || orderline.Quantity == 1)
+            {
+                _orderlines.Remove(orderline);
+            }
+            else
+            {
+                orderline.Quantity--;
+            }
         }
     }
 }
