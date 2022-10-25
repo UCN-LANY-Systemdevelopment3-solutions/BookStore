@@ -23,5 +23,6 @@ namespace BookShop.Model
         public bool IsDeleted { get; set; }
         public string ISBN { get; set; }
         public string Title { get; set; }
+        public IEnumerable<object> Subtotal { get; set; }
     }
 }

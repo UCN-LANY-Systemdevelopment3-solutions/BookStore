@@ -8,10 +8,15 @@ namespace BookShop.Model
 {
     public class ShoppingCart
     {
-        public IEnumerable<Book> Orderlines { get; set; }
+        public IEnumerable<Orderline> Orderlines { get; set; }
         public decimal Total { get; set; }
 
-        public void Add(Book book1)
+        public void Add(Book book1, int quantity = 1)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(Book book1, bool removeAll = false)
         {
             throw new NotImplementedException();
         }

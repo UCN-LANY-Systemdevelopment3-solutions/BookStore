@@ -1,4 +1,5 @@
-﻿using BookShop.Model;
+﻿using BookModelTests.Fixtures;
+using BookShop.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
