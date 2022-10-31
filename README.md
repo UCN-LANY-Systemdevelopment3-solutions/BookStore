@@ -1,14 +1,10 @@
 # Test Driven Development
 
-To try out Test Driven Development (TDD) we will develop the model layer for a web shop selling books. 
+This is the idicative solution to the exercise in the test first principle used in XP. 
+Note that this is "just" the final code and not a thorough description on how to work. 
+However, if you followed the workflow described in the exercise description and below, you should have worked "test first".
 
-The web shop will be created using TDD or “test first” principle. You should be familiar with how to create unit tests in C# already. If not, see this link for information [Testing in Visual Studio](https://learn.microsoft.com/en-us/visualstudio/test/improve-code-quality?view=vs-2022). The link points to a main page and a lot of the information can be obtained through subpages so remember to read those as well.
-
-## Working together  
-
-Do the exercises in pairs to practice Pair Programming, and change roles (coder/supervisor) regularly (e. g. every 30 minutes). Compare your solutions within the group from time to time.
-
-## Test Driven Development  
+## Test First Workflow 
 
 1. Code the test to validate only the specific requirements.  
 2. erify that you can’t compile (because the code you want to test doesn’t exist yet).  
@@ -16,12 +12,11 @@ Do the exercises in pairs to practice Pair Programming, and change roles (coder/
 4. Verify that your test fails   
 5. Only implement just enough code to make the test pass.  
 
-## Make Good Code
-“*Make the simplest code possible to make a test pass*” doesn’t mean: “*forget everything you know about writing good code*”!  
-Write good, [clean code](https://dzone.com/articles/clean-code-summary-and-key-points). Write code that expresses your intent through naming and structure. 
-Essentially: give meaningful names to classes, methods, variables and arguments, so people understand what’s going on. Use the phase where you’re writing the test, to plan how you would like to be able to use the actual code that you will write later. 
-
-Implement the following stories using the test first coding technique to ensure simple design according to the acceptance tests. The model classes must be added to the Model project.
+## Solution
+Your task was to implement a *model layer* in the application using the user stories below, and using the test first coding technique to ensure simple design according to the acceptance tests.
+Of course, the stories cover a lot more functionality than just that in the model layer, but thats not quite the point of test first.
+When writing the test, you define the minimum viable classes and functions to sustain the user story in all aspects of the solution, that is the model layer, the business logic layer, and the user interface layer.
+In this exercise it is only the model layer you should work on.
 
 ---
  
@@ -36,13 +31,21 @@ To be able to sell books the administrator of the web shop must be able to creat
 * That a book only is added if it is in a valid state (i.e., non-negative price, title/author/ISBN is a string longer than one character, etc.)
 
 ### Suggested tests
-* Make a bookstore that contains at least three different books with the following attributes: ISBN (string), title(text), author (text), price (positive number), number on stock (zero, or positive)
-* Add a book with invalid values (ISBN/Title/etc.) and make sure the store throws an ArgumentException
+As suggested above we wil be working with a couple of concepts here:
+* Two different roles: *Administrator* and *Customer*. Roles are, however, not important in the model layer (unless they represent data significant to the function of the program) so we leave them out at first.
+* The *Book* object is important, since the story will not exist without it.
+* It can be discussed whether it is a good idea to create the store as an object, but in this case we need something to represent our inventory, and the *book store* is perfect for that.  
+
+This leaves us with to classes: **BookStore** and **Book**, and the tests should confirm that it is possible to add valid books to the store.  
+
+When the tests are written, your implement the code in the model layer that makes it compile but not pass. Then add code so the tests passes.
 
 ---
  
 ## Story 2  
-The second story is a clean-up story. It is probably not a good idea to delete books we already have sold because the tax authorities might want to see our previous sales. Create the delete functionality on the collection, so it receives the ISBN number of the book as the identification of what book to delete (mark it deleted somehow, without removing the book object).
+The second story is a clean-up story. 
+It is probably not a good idea to delete books we already have sold because the tax authorities might want to see our previous sales. 
+Create the delete functionality on the collection, so it receives the ISBN number of the book as the identification of what book to delete (mark it deleted somehow, without removing the book object).
 
 ### User Story  
 > As an administrator, I want to be able to mark a book as deleted, so we no longer sell it, but it still exists in our records.
@@ -53,9 +56,14 @@ The second story is a clean-up story. It is probably not a good idea to delete b
 * If a non-existing book is deleted, no exceptions occur
 
 ### Suggested Tests  
-* Delete a book and check it is still in the collection, and marked as deleted
-* Delete a non existing book and check that no exeption is thrown
-* Delete a book that is marked as deleted, and check that its state does not change
+This user story gives us a little more information on the properties and behavior of a Book object.
+First of all, we need a way to mark a book as deleted, without deleting it completely from the collection. 
+This can be done by adding a property that can be true or false, indicating whether the object is available or not.
+This is, however, internal behavior in the Book class, so the test should not be aware of this.
+
+The tests calls a *Delete* method on the BookStore object and asserts the result, according to the success criteria. 
+
+After the test is written, you add code in the BookStore class so it can compile, but not pass. After that add code so the tests passes
 
 ---
  
@@ -71,11 +79,7 @@ After the manager has populated the web shop with some books the user needs to b
 * A search for a word that is part of title of one book and authorname of another, should find both books
 * Search for a word that is in neither part of a title or authername, does not find any books
 
-### Suggested Tests 
-* Search a book by entering part of a title
-* Search a book by entering part of the authors name
-* Search a book by entering part of a title and part of the authors name
-* Search a book by entering words that are not part of neither title nor name
+### Suggested Tests
 
 ---
  
@@ -89,8 +93,6 @@ The next step is then for the user to place the found books into a shopping cart
 * That a book can be added
 
 ### Suggested Tests 
-* Put a book into the cart. Verify that the cart contains that title with the correct total on the cart
-* Put another book into the cart. Verify that the cart contains that title with the new total on the cart
 
 ---
  
@@ -106,8 +108,4 @@ After the creation of the shopping cart the next natural step is allowing the us
 * When the quantity of a book is changed to zero, the book is removed and the total price for the order is calculated correctly
 
 ### Suggested Tests 
-* Add a book to the cart. Verify the subtotal for that book and total for the cart
-* Increase the quantity of a book. Verify that the subtotal and total goes up
-* Decrease the quantity of a book. Verify that the subtotal and total goes down
-* Remove a book by changing the quantity to zero. Verify that the book is removed, and the total has gone down
 

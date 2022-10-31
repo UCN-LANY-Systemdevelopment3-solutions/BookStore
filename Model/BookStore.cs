@@ -46,12 +46,12 @@ namespace BookShop.Model
             List<Book> result = new();
 
             if (title != null)
-                result.AddRange(_titles.Where(b => b.Title.Contains(title)));
+                result.AddRange(_titles.Where(b => b.Title.Contains(title) && !b.IsDeleted));
 
             if (authorName != null)
-                result.AddRange(_titles.Where(b => b.Author.Contains(authorName)));
+                result.AddRange(_titles.Where(b => b.Author.Contains(authorName) && !b.IsDeleted));
 
-            return result;
+            return result;  
         }
     }
 }
