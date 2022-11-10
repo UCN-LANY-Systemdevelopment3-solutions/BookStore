@@ -37,14 +37,14 @@ namespace BookModelTests
         public void TestDeleteNonExistingBook()
         {
             // Arrange
-            BookStore store = _bookStoreFixture.EmptyStore;
+            BookStore store = new();
             string isbn = "this is a non-existing isbn";
 
             // Act
-            var exception = Record.Exception(()=> store.Delete(isbn));
+            var exception = Record.Exception(() => store.Delete(isbn));
 
             // Assert
-            Assert.Null(exception);            
+            Assert.Null(exception);
         }
 
         [Fact]

@@ -22,18 +22,18 @@ namespace BookModelTests
         public void TestAddValidBooksToStore()
         {
             // Arrange
-            BookStore store = _bookStoreFixture.EmptyStore;
+            BookStore store = new();
             Book book1 = _bookStoreFixture.Book1;
             Book book2 = _bookStoreFixture.Book2;
             Book book3 = _bookStoreFixture.Book3;
 
             // Act
-            store.Add(book1);
-            store.Add(book2);
-            store.Add(book3);
+            store.Add(book1, 4);
+            store.Add(book2, 4);
+            store.Add(book3, 10);
 
             // Assert
-            Assert.Equal(3, store.Titles.Count());
+            Assert.Equal(18, store.InventoryCount);
         }
 
         [Theory]
@@ -45,11 +45,11 @@ namespace BookModelTests
         {
             // Arrange
             BookStore store = new();
-            Book book2 = new(isbn, title, author, price, 8);
+            Book book2 = new(isbn, title, author, price);
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(argument, () => { store.Add(book2); });
+            Assert.Throws<ArgumentException>(argument, () => { store.Add(book2, 1); });
         }
     }
 }
